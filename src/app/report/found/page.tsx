@@ -253,7 +253,7 @@ export default function ReportFoundBikePage() {
             
             <div>
               <label className="form-label">Kuvat</label>
-              <ImageUpload onImagesSelected={handleImagesSelected} maxImages={5} />
+              <ImageUpload onImagesSelected={handleImagesSelected} maxFiles={5} />
             </div>
             
             <div>
