@@ -5,9 +5,9 @@
  * This script should be run periodically to update external listings
  */
 
-const PrismaClient = require("../../generated/prisma").PrismaClient;
-const { fetchExternalListings, externalListingToBike } = require("../../lib/externalListings");
-const { BikeStatus } = require("../../types/bicycle");
+import { PrismaClient } from "../../generated/prisma";
+import { fetchExternalListings, externalListingToBike } from "../../lib/externalListings";
+import { BikeStatus } from "../../types/bicycle";
 
 const prisma = new PrismaClient();
 
@@ -103,4 +103,4 @@ if (require.main === module) {
   fetchForSaleListings().catch(console.error);
 }
 
-module.exports = fetchForSaleListings;
+export default fetchForSaleListings;

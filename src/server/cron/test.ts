@@ -5,7 +5,7 @@
  * This script can be used to test the cron job functionality
  */
 
-const PrismaClient = require("../../generated/prisma").PrismaClient;
+import { PrismaClient } from "../../generated/prisma";
 
 const prisma = new PrismaClient();
 

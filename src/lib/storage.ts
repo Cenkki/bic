@@ -1,6 +1,9 @@
 // StorageService interface for abstracting file storage
 // Can be implemented for local storage (development) or S3 (production)
 
+import fs from "fs";
+import path from "path";
+
 export interface StorageService {
   uploadFile(file: Buffer, filename: string, mimeType: string): Promise<string>;
   deleteFile(url: string): Promise<void>;
@@ -14,16 +17,12 @@ export class LocalStorageService implements StorageService {
   constructor(uploadDir: string = "/tmp/bicyai-uploads") {
     this.uploadDir = uploadDir;
     // Ensure the directory exists
-    const fs = require("fs");
     if (!fs.existsSync(this.uploadDir)) {
       fs.mkdirSync(this.uploadDir, { recursive: true });
     }
   }
 
   async uploadFile(file: Buffer, filename: string, mimeType: string): Promise<string> {
-    const fs = require("fs");
-    const path = require("path");
-    
     const filePath = path.join(this.uploadDir, filename);
     await fs.promises.writeFile(filePath, file);
     
@@ -32,9 +31,6 @@ export class LocalStorageService implements StorageService {
   }
 
   async deleteFile(url: string): Promise<void> {
-    const fs = require("fs");
-    const path = require("path");
-    
     const filename = path.basename(url);
     const filePath = path.join(this.uploadDir, filename);
     

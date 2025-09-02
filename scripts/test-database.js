@@ -1,4 +1,4 @@
-const { PrismaClient } = require('../src/generated/prisma');
+import { PrismaClient } from '../src/generated/prisma.js';
 
 async function testDatabase() {
   const databaseUrl = process.env.DATABASE_URL;

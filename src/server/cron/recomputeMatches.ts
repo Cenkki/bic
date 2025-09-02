@@ -8,8 +8,8 @@
  * as it processes all bikes in the system, not just external listings.
  */
 
-const PrismaClient = require("../../generated/prisma").PrismaClient;
-const { findMatchesForBike } = require("../../lib/matcher");
+import { PrismaClient } from "../../generated/prisma";
+import { findMatchesForBike } from "../../lib/matcher";
 
 const prisma = new PrismaClient();
 
@@ -78,4 +78,4 @@ if (require.main === module) {
   recomputeMatches().catch(console.error);
 }
 
-module.exports = recomputeMatches;
+export default recomputeMatches;
