@@ -3,14 +3,7 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/next",
-      "config": {
-        "includeFiles": [
-          "next.config.js",
-          "next.config.ts",
-          "prisma/**/*"
-        ]
-      }
+      "use": "@vercel/next"
     }
   ],
   "routes": [
@@ -22,13 +15,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "ENABLE_FILE_SYSTEM_API": "1"
-  },
-  "build": {
-    "env": {
-      "ENABLE_FILE_SYSTEM_API": "1"
-    }
-  }
+  ]
 }
