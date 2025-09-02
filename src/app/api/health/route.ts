@@ -1,10 +1,30 @@
 import { PrismaClient } from "@/generated/prisma";
 import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+// Only initialize PrismaClient if DATABASE_URL is set
+let prisma: PrismaClient | null = null;
+const databaseUrl = process.env.DATABASE_URL;
+
+if (databaseUrl) {
+  prisma = new PrismaClient();
+}
 
 export async function GET() {
+  // Check if DATABASE_URL is configured
+  if (!databaseUrl) {
+    return NextResponse.json({
+      status: "warning",
+      database: "not configured",
+      message: "DATABASE_URL environment variable not set",
+      timestamp: new Date().toISOString()
+    }, { status: 200 });
+  }
+
   try {
+    if (!prisma) {
+      throw new Error("PrismaClient not initialized");
+    }
+    
     // Test database connection
     await prisma.$connect();
     
@@ -23,8 +43,10 @@ export async function GET() {
       status: "error",
       database: "disconnected",
       error: error instanceof Error ? error.message : "Unknown error"
-    }, { status: 500 });
+    }, { status: 503 });
   } finally {
-    await prisma.$disconnect();
+    if (prisma) {
+      await prisma.$disconnect();
+    }
   }
 }

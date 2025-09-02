@@ -15,5 +15,8 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ]
+  ],
+  "env": {
+    "NEXTAUTH_URL": "https://bicyai-blsygvlkz-cenks-projects-8742d3dc.vercel.app"
+  }
 }

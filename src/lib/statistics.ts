@@ -1,10 +1,36 @@
 import { PrismaClient } from "../generated/prisma";
 import { BikeStatus } from "@/types/bicycle";
 
-const prisma = new PrismaClient();
+// Only create PrismaClient if DATABASE_URL is set
+let prisma: PrismaClient | null = null;
+const databaseUrl = process.env.DATABASE_URL;
+
+if (databaseUrl) {
+  prisma = new PrismaClient();
+}
 
 export async function getStatistics() {
+  // If no database URL is configured, return default values
+  if (!databaseUrl || !prisma) {
+    console.warn("DATABASE_URL not configured, returning default statistics");
+    return {
+      lostStolenCount: 0,
+      foundCount: 0,
+      matchesThisWeek: 0,
+      forSaleCount: 0,
+      error: "Database not configured"
+    };
+  }
+
   try {
+    // Test database connection with a timeout
+    await Promise.race([
+      prisma.$connect(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Database connection timeout')), 5000)
+      )
+    ]);
+
     // Get total lost/stolen bikes
     const lostStolenCount = await prisma.bike.count({
       where: {
@@ -47,11 +73,13 @@ export async function getStatistics() {
     };
   } catch (error) {
     console.error("Error fetching statistics:", error);
+    // Return default values instead of throwing an error
     return {
       lostStolenCount: 0,
       foundCount: 0,
       matchesThisWeek: 0,
-      forSaleCount: 0
+      forSaleCount: 0,
+      error: error instanceof Error ? error.message : "Unknown error"
     };
   }
 }

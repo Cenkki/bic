@@ -1,82 +1,77 @@
-# BicyAI - Pyörävahti
+# BicyAI Deployment Guide
 
-A Next.js application for tracking lost/stolen bicycles and finding owners for found bicycles.
+## Vercel Deployment Instructions
 
-## Deployment Instructions
+To deploy this application to Vercel successfully, you need to configure the following environment variables in your Vercel project settings:
 
-### Deploying to Vercel (Recommended)
+### Required Environment Variables
 
-1. Push the code to GitHub:
+1. `DATABASE_URL` - PostgreSQL connection string
+   - Format: `postgresql://USER:PASSWORD@HOST:PORT/DATABASE`
+   - Example: `postgresql://postgres:password@localhost:5432/bicyai`
+
+2. `NEXTAUTH_SECRET` - A random string used to hash tokens, sign cookies and generate cryptographic keys
+   - Generate a random string or use: `openssl rand -base64 32`
+
+3. `NEXTAUTH_URL` - The canonical URL of your site
+   - For production: `https://your-domain.com`
+   - For Vercel preview deployments: `https://your-project.vercel.app`
+
+### Optional Environment Variables
+
+4. `EMAIL_SERVER` - SMTP server configuration for email sending
+   - Format: `smtp://USERNAME:PASSWORD@HOST:PORT`
+   - Example: `smtp://user:password@smtp.example.com:587`
+
+5. `EMAIL_FROM` - The email address to send emails from
+   - Example: `Your App <noreply@your-domain.com>`
+
+6. `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` - Google reCAPTCHA site key (for frontend)
+
+7. `RECAPTCHA_SECRET_KEY` - Google reCAPTCHA secret key (for backend)
+
+8. `UPSTASH_REDIS_REST_URL` - Upstash Redis REST URL (for rate limiting)
+
+9. `UPSTASH_REDIS_REST_TOKEN` - Upstash Redis REST token (for rate limiting)
+
+10. `ENABLE_TORI_ADAPTER` - Enable/disable Tori.fi adapter (true/false)
+
+## Database Setup
+
+1. Create a PostgreSQL database (you can use services like Supabase, Render, or Railway)
+2. Run the Prisma migrations:
    ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/cenkki/bicyai.git
-   git push -u origin main
+   npx prisma migrate deploy
+   ```
+3. Generate the Prisma client:
+   ```bash
+   npx prisma generate
    ```
 
-2. Visit [Vercel](https://vercel.com) and sign up or log in
-3. Click "New Project"
-4. Import the GitHub repository
-5. Configure environment variables:
-   - DATABASE_URL
-   - NEXTAUTH_SECRET
-   - NEXTAUTH_URL=https://bicai.voon.fi
-   - Other required environment variables
-6. Deploy the project
-7. Add custom domain `bicai.voon.fi` in Vercel dashboard
-
-### Environment Variables
-
-Create a `.env.production` file with the following variables:
-```
-DATABASE_URL=your_production_database_url
-NEXTAUTH_SECRET=your_secure_random_string
-NEXTAUTH_URL=https://bicai.voon.fi
-# Add other required environment variables
-```
-
-### Docker Deployment
-
-Build and run with Docker:
-```bash
-docker build -t bicyai .
-docker run -p 3000:3000 --env-file .env.production bicyai
-```
-
-## Development
-
-### Getting Started
+## Local Development
 
 1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Set up the database:
-   ```bash
-   npx prisma migrate dev
-   ```
+2. Set up your `.env` file with the required environment variables
 
 3. Run the development server:
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+## Troubleshooting
 
-## Cron Jobs
+If you encounter a 504 Gateway Timeout error:
 
-The application includes cron jobs for fetching external listings and recomputing matches:
-- `npm run cron:fetch` - Fetch listings from external sources
-- `npm run cron:match` - Recompute bike matches
+1. Check that all required environment variables are set in Vercel
+2. Verify that your database is accessible from Vercel (check firewall settings)
+3. Test the health endpoint: `/api/health`
+4. Check Vercel logs for detailed error messages
 
-## Learn More
+## Health Check Endpoints
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Prisma Documentation](https://www.prisma.io/docs/)
-- [NextAuth Documentation](https://next-auth.js.org/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Leaflet Documentation](https://leafletjs.com/)
-- [image-hash Documentation](https://www.npmjs.com/package/image-hash)
-- [Upstash Redis Documentation](https://docs.upstash.com/redis)
+- `/api/health` - Database connectivity test
+- `/api/test` - Basic API functionality test
