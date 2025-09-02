@@ -1,3 +1,5 @@
+"use client";
+
 import Navigation from "@/components/Navigation";
 import StolenBikeForm from "@/components/StolenBikeForm";
 import { t } from "@/lib/i18n";
