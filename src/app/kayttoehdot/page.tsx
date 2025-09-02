@@ -51,7 +51,7 @@ export default function TermsOfService() {
       
       <h2 className="text-2xl font-semibold mt-8 mb-4">6. Vastuunrajoitus</h2>
       <p className="mb-4">
-        Palvelu tarjotaan "sellaisena kuin se on" ilman minkäänlaista takuuta. 
+        Palvelu tarjotaan &quot;sellaisena kuin se on&quot; ilman minkäänlaista takuuta. 
         Pyörävahti ei ole vastuussa palvelun keskeytymisestä tai virheistä, 
         eikä siitä, löytyykö kadonnut pyöräsi palvelun avulla.
       </p>
