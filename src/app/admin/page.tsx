@@ -2,12 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { getBikes } from "@/lib/actions";
-import { BikeStatus } from "@/types/bicycle";
-import Link from "next/link";
+import { Bike } from "@/types/bicycle";
 import AdminBikeList from "@/components/AdminBikeList";
 
 export default function AdminPage() {
-  const [bikes, setBikes] = useState<any[]>([]);
+  const [bikes, setBikes] = useState<Bike[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
