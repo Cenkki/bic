@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: bicyai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/bicyai?schema=public
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=your-secret-key-here-change-in-production
+      - EMAIL_SERVER=smtp://maildev:1025
+      - EMAIL_FROM=Pyörävahti <noreply@pyoravahti.fi>
+      - NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your-recaptcha-site-key
+      - RECAPTCHA_SECRET_KEY=your-recaptcha-secret-key
+      - UPSTASH_REDIS_REST_URL=your-redis-url
+      - UPSTASH_REDIS_REST_TOKEN=your-redis-token
+      - ENABLE_TORI_ADAPTER=true
+    depends_on:
+      - db
+    volumes:
+      - ./public/uploads:/app/public/uploads
+
+  maildev:
+    image: maildev/maildev
+    restart: always
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+
+volumes:
+  postgres_data:
