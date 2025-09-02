@@ -12,7 +12,14 @@ export default function AdminPage() {
   useEffect(() => {
     const fetchBikes = async () => {
       const bikeResult = await getBikes();
-      setBikes(bikeResult.success ? bikeResult.bikes || [] : []);
+      // Convert Prisma Bike objects to our Bike type
+      const convertedBikes = bikeResult.success 
+        ? (bikeResult.bikes || []).map(bike => ({
+            ...bike,
+            status: bike.status as any // Type assertion to resolve enum mismatch
+          }))
+        : [];
+      setBikes(convertedBikes);
       setLoading(false);
     };
     
