@@ -12,7 +12,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "cron:fetch": "ts-node src/server/cron/fetchForSale.ts",
-    "cron:match": "ts-node src/server/cron/recomputeMatches.ts"
+    "cron:match": "ts-node src/server/cron/recomputeMatches.ts",
+    "test:db": "node scripts/test-database.js"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",
