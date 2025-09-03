@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { getBikes } from "@/lib/actions";
+import { BikeStatus } from "@/types/bicycle";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   
   const filters = {
-    status: searchParams.get("status") as any || undefined,
+    status: searchParams.get("status") as BikeStatus || undefined,
     brand: searchParams.get("brand") || undefined,
     city: searchParams.get("city") || undefined,
     color: searchParams.get("color") || undefined,

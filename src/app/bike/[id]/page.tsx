@@ -6,6 +6,7 @@ import { findMatchesForBike } from "@/lib/matcher";
 import { notFound } from "next/navigation";
 import { sendOwnershipClaimEmail, sendAbuseReportEmail } from "@/lib/emailService";
 import { $Enums } from "@/generated/prisma";
+import Image from "next/image";
 
 export default async function BikeDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -87,18 +88,22 @@ export default async function BikeDetailPage({ params }: { params: Promise<{ id:
               <div className="mb-8">
                 {bike.images && bike.images.length > 0 ? (
                   <>
-                    <img 
+                    <Image 
                       src={bike.images[0].url} 
                       alt={`${bike.brand} ${bike.model}`} 
+                      width={800}
+                      height={384}
                       className="w-full h-96 object-cover rounded-lg mb-4"
                     />
                     {bike.images.length > 1 && (
                       <div className="flex space-x-2 overflow-x-auto">
                         {bike.images.slice(1).map((image: { id: string; url: string }) => (
-                          <img 
+                          <Image 
                             key={image.id} 
                             src={image.url} 
                             alt={`${bike.brand} ${bike.model}`} 
+                            width={96}
+                            height={96}
                             className="w-24 h-24 object-cover rounded-md flex-shrink-0"
                           />
                         ))}

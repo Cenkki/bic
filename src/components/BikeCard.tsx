@@ -1,4 +1,5 @@
 import { BikeStatus } from "@/types/bicycle";
+import Image from "next/image";
 
 interface BikeCardProps {
   id: string;
@@ -64,9 +65,11 @@ export default function BikeCard({
       )}
       
       {imageUrl ? (
-        <img 
+        <Image 
           src={imageUrl} 
           alt={`${brand} ${model}`} 
+          width={300}
+          height={128}
           className="w-full h-32 object-cover rounded-md mb-4"
         />
       ) : (

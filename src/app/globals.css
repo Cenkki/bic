@@ -10,6 +10,18 @@
   --secondary: #f3f4f6;
   --accent: #10b981;
   --error: #ef4444;
+  
+  /* Tailwind color variables */
+  --color-blue-50: #eff6ff;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-white: #ffffff;
 }
 
 body {
@@ -18,43 +30,108 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@theme {
+  --color-blue-50: var(--color-blue-50);
+  --color-blue-500: var(--color-blue-500);
+  --color-blue-600: var(--color-blue-600);
+  --color-gray-200: var(--color-gray-200);
+  --color-gray-300: var(--color-gray-300);
+  --color-gray-700: var(--color-gray-700);
+  --color-gray-800: var(--color-gray-800);
+  --color-red-500: var(--color-red-500);
+  --color-red-600: var(--color-red-600);
+  --color-white: var(--color-white);
+}
+
+@utility text-balance {
+  text-wrap: balance;
 }
 
 /* Custom styles for Pyörävahti */
-.btn-primary {
-  @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors;
+@utility btn-primary {
+  background-color: var(--color-blue-500);
+  color: var(--color-white);
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
 }
 
-.btn-secondary {
-  @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition-colors;
+.btn-primary:hover {
+  background-color: var(--color-blue-600);
 }
 
-.btn-danger {
-  @apply bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors;
+@utility btn-secondary {
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-800);
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
 }
 
-.form-input {
-  @apply border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+.btn-secondary:hover {
+  background-color: var(--color-gray-300);
 }
 
-.form-label {
-  @apply block text-gray-700 text-sm font-bold mb-2;
+@utility btn-danger {
+  background-color: var(--color-red-500);
+  color: var(--color-white);
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
 }
 
-.card {
-  @apply bg-white rounded-lg shadow-md overflow-hidden border border-gray-200;
+.btn-danger:hover {
+  background-color: var(--color-red-600);
 }
 
-.nav-link {
-  @apply text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors;
+@utility form-input {
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
 }
 
-.nav-link-active {
-  @apply bg-blue-50 text-blue-600;
+@utility form-input-focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  ring: 2px solid var(--color-blue-500);
+  border-color: transparent;
+}
+
+@utility form-label {
+  display: block;
+  color: var(--color-gray-700);
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+@utility card {
+  background-color: var(--color-white);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  border: 1px solid var(--color-gray-200);
+}
+
+@utility nav-link {
+  color: var(--color-gray-700);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--color-blue-600);
+}
+
+@utility nav-link-active {
+  background-color: var(--color-blue-50);
+  color: var(--color-blue-600);
 }
 
 /* Leaflet map styles */

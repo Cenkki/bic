@@ -5,6 +5,7 @@ import { BikeStatus } from "@/types/bicycle";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { archiveBike, deleteBike } from "@/lib/actions";
+import Image from "next/image";
 
 // Define form state types
 type AdminFormState = {
@@ -123,7 +124,7 @@ export default function AdminBikeList({ bikes }: { bikes: any[] }) {
                 <div className="flex items-center">
                   <div className="flex-shrink-0 h-10 w-10 bg-gray-200 rounded-md flex items-center justify-center">
                     {bike.images && bike.images.length > 0 ? (
-                      <img className="h-10 w-10 rounded-md object-cover" src={bike.images[0].url} alt="" />
+                      <Image className="h-10 w-10 rounded-md object-cover" src={bike.images[0].url} alt="" width={40} height={40} />
                     ) : (
                       <svg className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
