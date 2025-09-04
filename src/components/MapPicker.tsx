@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Fix for default marker icons in Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -34,7 +34,6 @@ export default function MapPicker({
   height = "400px"
 }: MapPickerProps) {
   const [position, setPosition] = useState<[number, number] | null>(initialPosition as [number, number] | null);
-  const [zoom, setZoom] = useState(13);
 
   const handleMapClick = (lat: number, lng: number) => {
     const newPosition: [number, number] = [lat, lng];
@@ -46,7 +45,7 @@ export default function MapPicker({
     <div className="relative">
       <MapContainer 
         center={initialPosition} 
-        zoom={zoom} 
+        zoom={13} 
         style={{ height, width: "100%" }}
         className="rounded-lg"
       >

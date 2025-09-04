@@ -97,12 +97,6 @@ export default function ImageUpload({
     onImagesSelected(newImages);
   };
 
-  const onButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div>
       <div
